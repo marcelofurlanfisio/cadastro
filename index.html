@@ -17,7 +17,7 @@
   --c-navy-900:#08161f;--c-navy-800:#0e2433;--c-navy-700:#143247;--c-navy-200:#a9c2d2;--c-navy-100:#dce7ed;
   --c-teal-300:#5fbdb6;--c-teal-500:#14938f;
   --c-cream-50:#fcf9f3;--c-cream-100:#f6f0e4;--c-cream-200:#ede3d0;--c-cream-500:#968566;
-  --c-clay-700:#8a4526;--c-clay-600:#a9552f;--c-clay-500:#c2683a;--c-clay-100:#f4e0d4;
+  --c-clay-700:#8a4526;--c-clay-300:#e0a484;--c-clay-600:#a9552f;--c-clay-500:#c2683a;--c-clay-100:#f4e0d4;
   --c-ink-700:#33414c;--c-ink-500:#5a6b78;--c-white:#fff;
   --c-success:#2e7d5b;--c-success-100:#e4f0ea;--c-success-700:#256a4c;--c-danger:#b23a2f;--c-danger-100:#f7e3e1;
 
@@ -215,9 +215,43 @@ dialog{border:0;padding:0;color:var(--text-body)}
 .mod-d{font-family:var(--font-data);font-size:var(--fs-label);letter-spacing:var(--ls-mono);color:var(--text-muted)}
 .badge{align-self:flex-start;font-size:var(--fs-micro);font-weight:600;letter-spacing:var(--ls-eyebrow);text-transform:uppercase;padding:5px 9px;border-radius:var(--radius-sm);background:var(--surface-accent);color:var(--text-accent)}
 
+/* Rodapé com calendário */
+footer.register-deep{--text-accent:var(--c-clay-300);--text-link:var(--c-clay-300);--focus-ring:var(--c-clay-300)}
+.agenda{display:block!important;padding-bottom:var(--sp-9);margin-bottom:var(--sp-9);border-bottom:var(--bw-hairline) solid var(--border-hairline)}
+.agenda-head h2{font-size:var(--fs-h2);margin-top:var(--sp-3)}
+.agenda-grid{display:grid;gap:var(--sp-7);margin-top:var(--sp-7);align-items:start}
+@media (min-width:900px){.agenda-grid{grid-template-columns:340px 1fr;gap:var(--sp-9)}}
+.cal{background:var(--c-navy-700);border-radius:var(--radius-xl);padding:var(--sp-6)}
+.cal-head{display:flex;align-items:center;justify-content:space-between}
+.cal-mes{font-family:var(--font-display);font-size:var(--fs-h3);font-weight:600;color:var(--text-heading);text-transform:capitalize}
+.cal-nav{width:36px;height:36px;display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:var(--radius-md);background:transparent;color:var(--text-heading);cursor:pointer}
+.cal-nav:hover{background:rgba(255,255,255,.08)}
+.cal-semana,.cal-dias{display:grid;grid-template-columns:repeat(7,1fr);text-align:center}
+.cal-semana{margin-top:var(--sp-4);font-size:var(--fs-micro);font-weight:600;letter-spacing:var(--ls-eyebrow);color:var(--text-muted)}
+.cal-semana span{padding:var(--sp-2) 0}
+.cal-dias{gap:4px}
+.cal-dias span,.cal-dias button{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-family:var(--font-data);font-size:var(--fs-body-sm);color:var(--text-body);border-radius:var(--radius-md);border:0;background:transparent;padding:0}
+.cal-dias .fora{visibility:hidden}
+.cal-dias .hoje{box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.4)}
+.cal-dias button.tem{background:var(--c-clay-600);color:var(--c-cream-50);font-weight:500;cursor:pointer}
+.cal-dias button.tem:hover{background:var(--c-clay-500)}
+.cal-leg{margin-top:var(--sp-4);font-size:var(--fs-micro);color:var(--text-muted);display:flex;align-items:center;gap:var(--sp-2)}
+.cal-leg .dot{width:10px;height:10px;border-radius:2px;background:var(--c-clay-600)}
+.cursos{display:grid;gap:var(--sp-5)}
+@media (min-width:700px){.cursos{grid-template-columns:1fr 1fr}}
+.curso{border:var(--bw-hairline) solid var(--border-hairline);border-radius:var(--radius-xl);padding:var(--sp-6);display:flex;flex-direction:column;gap:var(--sp-3);transition:border-color var(--dur-base) var(--ease-standard)}
+.curso.destaque{border-color:var(--c-clay-300)}
+.curso .badge{background:rgba(224,164,132,.16);color:var(--c-clay-300)}
+.curso .badge.neutro{background:rgba(255,255,255,.08);color:var(--c-navy-100)}
+.curso h3{font-size:var(--fs-h3)}
+.curso p{font-size:var(--fs-body-sm)}
+.curso .metaline{font-size:var(--fs-label)}
+.curso .acao{margin-top:var(--sp-2);align-self:flex-start;font-size:var(--fs-label);font-weight:600;padding:8px 14px;border-radius:var(--radius-md);background:var(--c-clay-600);color:var(--c-cream-50);text-decoration:none;border:0;cursor:pointer;font-family:var(--font-ui)}
+.curso .acao:hover{background:#8a4526;color:var(--c-cream-50)}
+
 /* Rodapé */
 footer{padding:var(--sp-9) 0}
-footer .wrap{display:flex;flex-wrap:wrap;gap:var(--sp-6);justify-content:space-between;align-items:flex-end}
+footer .footer-base{display:flex;flex-wrap:wrap;gap:var(--sp-6);justify-content:space-between;align-items:flex-end}
 footer .metaline{color:var(--text-muted)}
 footer .metaline a{color:var(--text-link)}
 </style>
@@ -412,7 +446,26 @@ footer .metaline a{color:var(--text-link)}
 </dialog>
 
 <footer class="register-deep">
-  <div class="wrap">
+  <div class="wrap agenda" id="calendario" aria-labelledby="cal-titulo">
+    <div class="agenda-head">
+      <div class="eyebrow">Calendário</div>
+      <h2 id="cal-titulo">Próximas turmas</h2>
+    </div>
+    <div class="agenda-grid">
+      <div class="cal" aria-live="polite">
+        <div class="cal-head">
+          <button class="cal-nav" type="button" data-dir="-1" aria-label="Mês anterior"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+          <div class="cal-mes" id="cal-mes"></div>
+          <button class="cal-nav" type="button" data-dir="1" aria-label="Próximo mês"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
+        </div>
+        <div class="cal-semana"><span>D</span><span>S</span><span>T</span><span>Q</span><span>Q</span><span>S</span><span>S</span></div>
+        <div class="cal-dias" id="cal-dias"></div>
+        <p class="cal-leg"><span class="dot"></span>Dias com turma</p>
+      </div>
+      <div class="cursos" id="cursos"></div>
+    </div>
+  </div>
+  <div class="wrap footer-base">
     <div class="lockup md">
       <div class="lockup-name">Prof. Marcelo Furlan</div>
       <div class="lockup-role">Fisioterapeuta Osteopata D.O.</div>
@@ -509,6 +562,74 @@ const GALERIA = Array.from({length:15}, (_, i) => {
     document.querySelector('.st-prev').onclick = () => grid.scrollBy({left:-passo(), behavior:'smooth'});
     document.querySelector('.st-next').onclick = () => grid.scrollBy({left:passo(), behavior:'smooth'});
   }
+})();
+
+/* ================== PRÓXIMAS TURMAS (rodapé) ==================
+   Cada curso vira um bloco ao lado do calendário.
+   "datas" no formato ano-mês-dia. Sem datas, aparece como "Data a definir".
+   "link" leva à página do curso. Sem link, o botão leva ao formulário desta página
+   e marca a caixinha "interesse". */
+const CURSOS = [
+  {titulo:"Liberação Miofascial com evidência", resumo:"Curso prático com 80% de prática supervisionada na maca. Cervical, lombar e pelve, membro inferior e antebraço.", datas:["2027-02-27"], meta:["Presencial","8h às 18h","Campinas · SP"], selo:"Data prevista", link:"https://marcelofurlanfisio.github.io/curso_liberacao_miofascial/", botao:"Ver o curso"},
+  {titulo:"Terapia Manual Moderna", resumo:"Módulo 01 Membros & ATM e Módulo 02 Coluna Vertebral.", datas:[], meta:["Presencial","Campinas · SP"], selo:"Datas a confirmar", interesse:"Terapia Manual Moderna - Coluna Vertebral", botao:"Quero ser avisado"}
+];
+/* ============================================================ */
+
+(function(){
+  const meses = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+  const lista = document.getElementById('cursos'), mapa = {};
+  const dd = n => String(n).padStart(2,'0');
+  function fmtDatas(ds){
+    if (!ds.length) return 'Data a definir';
+    const p = ds.map(x => x.split('-').map(Number)), a = p[0], b = p[p.length-1];
+    if (ds.length === 1) return dd(a[2]) + ' de ' + meses[a[1]-1] + ' de ' + a[0];
+    if (a[0]===b[0] && a[1]===b[1]) return dd(a[2]) + ' e ' + dd(b[2]) + ' de ' + meses[a[1]-1] + ' de ' + a[0];
+    return dd(a[2]) + '/' + dd(a[1]) + ' a ' + dd(b[2]) + '/' + dd(b[1]) + '/' + b[0];
+  }
+  CURSOS.forEach((c,i) => {
+    c.datas.forEach(d => (mapa[d] = mapa[d] || []).push(i));
+    const el = document.createElement('article');
+    el.className = 'curso'; el.id = 'curso-' + i;
+    el.innerHTML = '<span class="badge' + (c.datas.length ? '' : ' neutro') + '">' + c.selo + '</span>' +
+      '<h3>' + c.titulo + '</h3><p>' + c.resumo + '</p>' +
+      '<div class="metaline"><span>' + fmtDatas(c.datas) + '</span>' + c.meta.map(m => '<span>' + m + '</span>').join('') + '</div>' +
+      (c.link ? '<a class="acao" href="' + c.link + '">' + c.botao + '</a>' : '<button class="acao" type="button">' + c.botao + '</button>');
+    if (!c.link) el.querySelector('button').onclick = () => {
+      const box = document.querySelector('input[name="interesses"][value="' + c.interesse + '"]');
+      if (box) box.checked = true;
+      document.getElementById('cadastro').scrollIntoView({behavior:'smooth'});
+    };
+    lista.appendChild(el);
+  });
+
+  const datas = Object.keys(mapa).sort(), hoje = new Date();
+  let ref = datas.length ? new Date(datas[0] + 'T12:00') : hoje;
+  const tituloMes = document.getElementById('cal-mes'), dias = document.getElementById('cal-dias');
+  function desenhar(){
+    const a = ref.getFullYear(), m = ref.getMonth();
+    tituloMes.textContent = meses[m] + ' ' + a;
+    dias.innerHTML = '';
+    const ini = new Date(a, m, 1).getDay(), total = new Date(a, m+1, 0).getDate();
+    for (let k = 0; k < ini; k++) { const x = document.createElement('span'); x.className = 'fora'; dias.appendChild(x); }
+    for (let d = 1; d <= total; d++) {
+      const cursos = mapa[a + '-' + dd(m+1) + '-' + dd(d)];
+      const el = document.createElement(cursos ? 'button' : 'span');
+      el.textContent = d;
+      if (a === hoje.getFullYear() && m === hoje.getMonth() && d === hoje.getDate()) el.classList.add('hoje');
+      if (cursos) {
+        el.type = 'button'; el.classList.add('tem');
+        el.setAttribute('aria-label', d + ' de ' + meses[m] + ', ' + cursos.map(i => CURSOS[i].titulo).join(', '));
+        el.onclick = () => {
+          document.querySelectorAll('.curso.destaque').forEach(x => x.classList.remove('destaque'));
+          cursos.forEach(i => document.getElementById('curso-' + i).classList.add('destaque'));
+          document.getElementById('curso-' + cursos[0]).scrollIntoView({behavior:'smooth', block:'nearest'});
+        };
+      }
+      dias.appendChild(el);
+    }
+  }
+  document.querySelectorAll('.cal-nav').forEach(b => b.onclick = () => { ref = new Date(ref.getFullYear(), ref.getMonth() + (+b.dataset.dir), 1); desenhar(); });
+  desenhar();
 })();
 
 /* Pop-up de privacidade e botões de fechar */
