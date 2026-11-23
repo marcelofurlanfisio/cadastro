@@ -207,7 +207,7 @@ dialog{border:0;padding:0;color:var(--text-body)}
 
 /* Turma realizada */
 .turma-info{margin-top:var(--sp-6);display:flex;flex-direction:column;align-items:flex-start}
-.turma-info h3{font-size:var(--fs-h3);margin-top:var(--sp-3)}
+.turma-info h3{font-size:var(--fs-h3)}
 .modulos{list-style:none;margin:var(--sp-4) 0 0;padding:0;display:grid;gap:var(--sp-3)}
 .modulos li{display:flex;flex-wrap:wrap;align-items:baseline;gap:var(--sp-2) var(--sp-4)}
 .mod-n{font-family:var(--font-data);font-size:var(--fs-label);letter-spacing:var(--ls-mono);color:var(--text-accent);min-width:88px}
@@ -399,10 +399,9 @@ footer .metaline a{color:var(--text-link)}
 <section class="gallery" aria-labelledby="gal-titulo">
   <div class="wrap">
     <div class="eyebrow">Na prática</div>
-    <h2 id="gal-titulo">Últimas turmas</h2>
+    <h2 id="gal-titulo">Turmas concluídas</h2>
     <div class="rule" aria-hidden="true"></div>
     <div class="turma-info">
-      <span class="badge">Turma realizada</span>
       <h3>Curso Terapia Manual Moderna</h3>
       <ul class="modulos">
         <li><span class="mod-n">Módulo 01</span><span class="mod-t">Membros &amp; ATM</span><span class="mod-d">07 e 08 de novembro de 2026</span></li>
@@ -410,7 +409,7 @@ footer .metaline a{color:var(--text-link)}
       </ul>
     </div>
     <div class="strip-wrap">
-      <div class="strip" id="galeria" tabindex="0" aria-label="Fotos das últimas turmas"></div>
+      <div class="strip" id="galeria" tabindex="0" aria-label="Fotos das turmas concluídas"></div>
       <button class="sl-btn st-prev" type="button" aria-label="Voltar"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
       <button class="sl-btn st-next" type="button" aria-label="Avançar"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
     </div>
@@ -503,7 +502,7 @@ const FOTOS = [
 /* Galeria "Últimas turmas" (mais abaixo na página). Vazia = seção escondida. */
 const GALERIA = Array.from({length:15}, (_, i) => {
   const n = String(i + 1).padStart(2, '0');
-  return {arquivo:"turmas/" + n + ".jpg", inteira:"turmas/" + n + "-grande.jpg", legenda:"Últimas turmas · foto " + (i + 1) + " de 15"};
+  return {arquivo:"turmas/" + n + ".jpg", inteira:"turmas/" + n + "-grande.jpg", legenda:"Turmas concluídas · foto " + (i + 1) + " de 15"};
 });
 /* ========================================== */
 
