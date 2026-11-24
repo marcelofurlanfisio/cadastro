@@ -245,6 +245,10 @@ footer.register-deep{--text-accent:var(--c-clay-300);--text-link:var(--c-clay-30
 .curso .badge.neutro{background:rgba(255,255,255,.08);color:var(--c-navy-100)}
 .curso h3{font-size:var(--fs-h3)}
 .curso p{font-size:var(--fs-body-sm)}
+.curso p b{color:var(--text-heading);font-weight:600}
+.curso .mod{display:block;margin-top:var(--sp-3)}
+.curso .mod b{display:block}
+.curso .mod small{display:block;font-family:var(--font-data);font-size:var(--fs-label);letter-spacing:var(--ls-mono);color:var(--text-muted);margin-top:2px}
 .curso .metaline{font-size:var(--fs-label)}
 .curso .acao{margin-top:var(--sp-2);align-self:flex-start;font-size:var(--fs-label);font-weight:600;padding:8px 14px;border-radius:var(--radius-md);background:var(--c-clay-600);color:var(--c-cream-50);text-decoration:none;border:0;cursor:pointer;font-family:var(--font-ui)}
 .curso .acao:hover{background:#8a4526;color:var(--c-cream-50)}
@@ -570,7 +574,7 @@ const GALERIA = Array.from({length:15}, (_, i) => {
    e marca a caixinha "interesse". */
 const CURSOS = [
   {titulo:"Liberação Miofascial com evidência", resumo:"Curso prático com 80% de prática supervisionada na maca. Cervical, lombar e pelve, membro inferior e antebraço.", datas:["2027-02-27"], meta:["Presencial","8h às 18h","Campinas · SP"], selo:"Lista de espera aberta", link:"https://marcelofurlanfisio.github.io/curso_liberacao_miofascial/", botao:"Ver o curso"},
-  {titulo:"Terapia Manual Moderna", resumo:"Módulo 01 Membros & ATM e Módulo 02 Coluna Vertebral.", datas:[], meta:["Presencial","Campinas · SP"], selo:"Datas a confirmar", interesse:"Terapia Manual Moderna - Coluna Vertebral", botao:"Quero ser avisado"}
+  {titulo:"Terapia Manual Moderna", resumo:"Formação presencial em dois módulos. Faça um ou os dois.<span class=\"mod\"><b>Módulo 01 · Coluna Vertebral</b><small>22 e 23 de maio de 2027</small></span><span class=\"mod\"><b>Módulo 02 · Membros &amp; ATM</b><small>29 e 30 de maio de 2027</small></span>", datas:["2027-05-22","2027-05-23","2027-05-29","2027-05-30"], quando:"", meta:["Presencial","UniMetrocamp · Campinas · SP"], selo:"Inscrições abertas", link:"https://marcelofurlanfisio.github.io/curso_terapia_manual_moderna/", botao:"Ver o curso"}
 ];
 /* ============================================================ */
 
@@ -591,7 +595,7 @@ const CURSOS = [
     el.className = 'curso'; el.id = 'curso-' + i;
     el.innerHTML = '<span class="badge' + (c.datas.length ? '' : ' neutro') + '">' + c.selo + '</span>' +
       '<h3>' + c.titulo + '</h3><p>' + c.resumo + '</p>' +
-      '<div class="metaline"><span>' + fmtDatas(c.datas) + '</span>' + c.meta.map(m => '<span>' + m + '</span>').join('') + '</div>' +
+      '<div class="metaline">' + (c.quando === '' ? '' : '<span>' + (c.quando || fmtDatas(c.datas)) + '</span>') + c.meta.map(m => '<span>' + m + '</span>').join('') + '</div>' +
       (c.link ? '<a class="acao" href="' + c.link + '">' + c.botao + '</a>' : '<button class="acao" type="button">' + c.botao + '</button>');
     if (!c.link) el.querySelector('button').onclick = () => {
       const box = document.querySelector('input[name="interesses"][value="' + c.interesse + '"]');
