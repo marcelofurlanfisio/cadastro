@@ -102,7 +102,7 @@ a:hover{color:var(--text-link-hover);text-decoration-thickness:2px}
 /* Hero + formulário */
 .main{padding:var(--sp-9) 0 var(--sp-12)}
 .grid{display:grid;gap:var(--sp-9)}
-@media (min-width:960px){.grid{grid-template-columns:5fr 7fr;gap:var(--sp-11);align-items:start}.intro{position:sticky;top:112px}}
+@media (min-width:960px){.grid{grid-template-columns:5fr 7fr;gap:var(--sp-11);align-items:start}}
 .intro h1{font-size:clamp(40px,6vw,var(--fs-display-2));font-weight:500;line-height:1.1;letter-spacing:var(--ls-display);margin-top:var(--sp-4)}
 .rule{width:56px;height:var(--bw-rule);background:var(--surface-accent-solid);margin:var(--sp-6) 0}
 .lead{font-size:var(--fs-body-lg);max-width:var(--measure-tight);color:var(--text-body)}
@@ -227,6 +227,10 @@ footer.register-deep{--text-accent:var(--c-clay-300);--text-link:var(--c-clay-30
 .agenda-head h2{font-size:var(--fs-h2);margin-top:var(--sp-3)}
 .agenda-grid{display:grid;gap:var(--sp-7);margin-top:var(--sp-7);align-items:start}
 @media (min-width:900px){.agenda-grid{grid-template-columns:340px 1fr;gap:var(--sp-9)}}
+.agenda-panel{--surface-page:var(--c-navy-800);--text-heading:var(--c-cream-50);--text-body:var(--c-navy-100);--text-muted:var(--c-navy-200);--text-accent:var(--c-teal-300);--text-link:var(--c-teal-300);--text-link-hover:var(--c-white);--border-hairline:rgba(255,255,255,.12);--focus-ring:var(--c-teal-500);--surface-accent:var(--c-navy-700);--border-accent:var(--c-teal-300);background:var(--c-navy-800);color:var(--c-navy-100);border-radius:var(--radius-xl);padding:var(--sp-7);margin-top:var(--sp-9)}
+.agenda-panel .agenda{padding:0;margin:0;border:0;display:block}
+.agenda-panel .agenda-grid{grid-template-columns:1fr!important;gap:var(--sp-6)}
+.agenda-panel .cursos{grid-template-columns:1fr!important}
 .cal{background:var(--c-navy-700);border-radius:var(--radius-xl);padding:var(--sp-6)}
 .cal-head{display:flex;align-items:center;justify-content:space-between}
 .cal-mes{font-family:var(--font-display);font-size:var(--fs-h3);font-weight:600;color:var(--text-heading);text-transform:capitalize}
@@ -293,6 +297,27 @@ footer .metaline a{color:var(--text-link)}
         <button class="sl-btn sl-next" type="button" aria-label="Próxima foto"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
         <div class="sl-dots" id="dots"></div>
       </div>
+      <div class="agenda-panel">
+        <div class="agenda" id="calendario" aria-labelledby="cal-titulo">
+    <div class="agenda-head">
+      <div class="eyebrow">Calendário</div>
+      <h2 id="cal-titulo">Próximas turmas</h2>
+    </div>
+    <div class="agenda-grid">
+      <div class="cal" aria-live="polite">
+        <div class="cal-head">
+          <button class="cal-nav" type="button" data-dir="-1" aria-label="Mês anterior"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+          <div class="cal-mes" id="cal-mes"></div>
+          <button class="cal-nav" type="button" data-dir="1" aria-label="Próximo mês"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
+        </div>
+        <div class="cal-semana"><span>D</span><span>S</span><span>T</span><span>Q</span><span>Q</span><span>S</span><span>S</span></div>
+        <div class="cal-dias" id="cal-dias"></div>
+        <p class="cal-leg"><span class="dot"></span>Dias com turma</p>
+      </div>
+      <div class="cursos" id="cursos"></div>
+    </div>
+  </div>
+      </div>
     </section>
 
     <section class="card" id="cadastro" aria-labelledby="form-titulo">
@@ -337,15 +362,15 @@ footer .metaline a{color:var(--text-link)}
 
         <div class="row city">
           <div class="field" data-field="cidade">
-            <label class="label" for="cidade">Cidade <span class="opt">(obrigatório)</span></label>
-            <input class="input" id="cidade" name="cidade" type="text" autocomplete="address-level2" required maxlength="80">
+            <label class="label" for="cidade">Cidade <span class="opt">(opcional)</span></label>
+            <input class="input" id="cidade" name="cidade" type="text" autocomplete="address-level2" maxlength="80">
             <span class="err">Informe sua cidade.</span>
           </div>
           <div class="field" data-field="uf">
-            <label class="label" for="uf">UF <span class="opt">(obrigatório)</span></label>
-            <select class="input" id="uf" name="uf" required>
+            <label class="label" for="uf">UF <span class="opt">(opcional)</span></label>
+            <select class="input" id="uf" name="uf">
               <option value="">UF</option>
-              <option>AC</option><option>AL</option><option>AP</option><option>AM</option><option>BA</option><option>CE</option><option>DF</option><option>ES</option><option>GO</option><option>MA</option><option>MT</option><option>MS</option><option>MG</option><option>PA</option><option>PB</option><option>PR</option><option>PE</option><option>PI</option><option>RJ</option><option>RN</option><option>RS</option><option>RO</option><option>RR</option><option>SC</option><option selected>SP</option><option>SE</option><option>TO</option>
+              <option>AC</option><option>AL</option><option>AP</option><option>AM</option><option>BA</option><option>CE</option><option>DF</option><option>ES</option><option>GO</option><option>MA</option><option>MT</option><option>MS</option><option>MG</option><option>PA</option><option>PB</option><option>PR</option><option>PE</option><option>PI</option><option>RJ</option><option>RN</option><option>RS</option><option>RO</option><option>RR</option><option>SC</option><option>SP</option><option>SE</option><option>TO</option>
             </select>
             <span class="err">Escolha a UF.</span>
           </div>
@@ -455,25 +480,6 @@ footer .metaline a{color:var(--text-link)}
 </dialog>
 
 <footer class="register-deep">
-  <div class="wrap agenda" id="calendario" aria-labelledby="cal-titulo">
-    <div class="agenda-head">
-      <div class="eyebrow">Calendário</div>
-      <h2 id="cal-titulo">Próximas turmas</h2>
-    </div>
-    <div class="agenda-grid">
-      <div class="cal" aria-live="polite">
-        <div class="cal-head">
-          <button class="cal-nav" type="button" data-dir="-1" aria-label="Mês anterior"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
-          <div class="cal-mes" id="cal-mes"></div>
-          <button class="cal-nav" type="button" data-dir="1" aria-label="Próximo mês"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
-        </div>
-        <div class="cal-semana"><span>D</span><span>S</span><span>T</span><span>Q</span><span>Q</span><span>S</span><span>S</span></div>
-        <div class="cal-dias" id="cal-dias"></div>
-        <p class="cal-leg"><span class="dot"></span>Dias com turma</p>
-      </div>
-      <div class="cursos" id="cursos"></div>
-    </div>
-  </div>
   <div class="wrap footer-base">
     <div class="lockup md">
       <div class="lockup-name">Prof. Marcelo Furlan</div>
@@ -672,9 +678,7 @@ const CURSOS = [
     nome: v => v.trim().split(/\s+/).length >= 2,
     email: v => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()),
     celular: v => { const d = v.replace(/\D/g,''); return d.length === 10 || d.length === 11; },
-    perfil: v => v !== '',
-    cidade: v => v.trim().length >= 2,
-    uf: v => v !== ''
+    perfil: v => v !== ''
   };
 
   function setInvalid(name, bad){
