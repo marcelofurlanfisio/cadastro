@@ -705,12 +705,10 @@ const CURSOS = [
     if (box && box.classList.contains('invalid')) box.classList.remove('invalid');
   });
 
-  function origem(){
+  function origem(){ return 'cadastro'; }
+  function utmParams(){
     const p = new URLSearchParams(location.search);
-    const utm = ['utm_source','utm_medium','utm_campaign'].map(k => p.get(k)).filter(Boolean).join(' / ');
-    if (utm) return utm;
-    try { if (document.referrer) return new URL(document.referrer).hostname; } catch(e){}
-    return 'Direto';
+    return ['utm_source','utm_medium','utm_campaign'].map(k => p.get(k)).filter(Boolean).join(' / ');
   }
 
   form.addEventListener('submit', async e => {
@@ -725,6 +723,7 @@ const CURSOS = [
     data.append('consentimento', 'sim');
     data.append('versao_termo', VERSAO_TERMO);
     data.append('origem', origem());
+    data.append('utm', utmParams());
 
     btn.disabled = true;
     btn.textContent = 'Enviando...';
