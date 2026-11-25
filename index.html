@@ -243,8 +243,15 @@ footer.register-deep{--text-accent:var(--c-clay-300);--text-link:var(--c-clay-30
 .cal-dias button.tem:hover{background:var(--c-clay-500)}
 .cal-leg{margin-top:var(--sp-4);font-size:var(--fs-micro);color:var(--text-muted);display:flex;align-items:center;gap:var(--sp-2)}
 .cal-leg .dot{width:10px;height:10px;border-radius:2px;background:var(--c-clay-600)}
-.cursos{display:grid;gap:var(--sp-5)}
-@media (min-width:700px){.cursos{grid-template-columns:1fr 1fr}}
+.cursos-wrap{min-width:0}
+.cursos{display:flex;gap:var(--sp-5);overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;padding:2px}
+.cursos::-webkit-scrollbar{display:none}
+.cursos .curso{flex:0 0 100%;scroll-snap-align:start}
+@media (min-width:700px){.cursos .curso{flex-basis:calc(50% - var(--sp-5)/2)}}
+.cursos-nav{display:flex;align-items:center;justify-content:space-between;gap:var(--sp-4);margin-top:var(--sp-5)}
+.cur-dots{display:flex;gap:6px}
+.cur-dots button{width:8px;height:8px;padding:0;border:0;border-radius:var(--radius-pill);background:rgba(255,255,255,.3);cursor:pointer;transition:width var(--dur-base) var(--ease-standard),background-color var(--dur-base) var(--ease-standard)}
+.cur-dots button[aria-current="true"]{width:22px;background:var(--c-clay-300)}
 .curso{border:var(--bw-hairline) solid var(--border-hairline);border-radius:var(--radius-xl);padding:var(--sp-6);display:flex;flex-direction:column;gap:var(--sp-3);transition:border-color var(--dur-base) var(--ease-standard)}
 .curso.destaque{border-color:var(--c-clay-300)}
 .curso .badge{background:rgba(224,164,132,.16);color:var(--c-clay-300)}
@@ -471,7 +478,14 @@ footer .metaline a{color:var(--text-link)}
         <div class="cal-dias" id="cal-dias"></div>
         <p class="cal-leg"><span class="dot"></span>Dias com turma</p>
       </div>
-      <div class="cursos" id="cursos"></div>
+      <div class="cursos-wrap">
+        <div class="cursos" id="cursos" tabindex="0" aria-label="Próximos cursos"></div>
+        <div class="cursos-nav">
+          <button class="cal-nav cur-prev" type="button" aria-label="Curso anterior"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+          <div class="cur-dots" id="cur-dots"></div>
+          <button class="cal-nav cur-next" type="button" aria-label="Próximo curso"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
+        </div>
+      </div>
     </div>
   </div>
   <div class="wrap footer-base">
@@ -578,8 +592,9 @@ const GALERIA = Array.from({length:15}, (_, i) => {
    "link" leva à página do curso. Sem link, o botão leva ao formulário desta página
    e marca a caixinha "interesse". */
 const CURSOS = [
-  {titulo:"Liberação Miofascial com evidência", resumo:"80% prático, supervisionado na maca. Cervical, lombar e pelve, membro inferior e antebraço.", datas:["2027-02-27"], meta:["Presencial","8h às 18h","UniMetrocamp · Campinas, SP"], selo:"Lista de espera aberta", link:"https://marcelofurlanfisio.github.io/curso_liberacao_miofascial/", botao:"Ver o curso"},
-  {titulo:"Terapia Manual Moderna", resumo:"Formação em dois módulos.<span class=\"mod\"><b>Módulo 01 · Coluna Vertebral</b><small>22 e 23 de maio de 2027</small></span><span class=\"mod\"><b>Módulo 02 · Membros &amp; ATM</b><small>29 e 30 de maio de 2027</small></span>", datas:["2027-05-22","2027-05-23","2027-05-29","2027-05-30"], quando:"", meta:["UniMetrocamp · Campinas, SP"], selo:"Lista de espera aberta", link:"https://marcelofurlanfisio.github.io/curso_terapia_manual_moderna/", botao:"Ver o curso"}
+  {titulo:"Liberação Miofascial com evidência", resumo:"80% prático, supervisionado na maca. Cervical, lombar e pelve, membro inferior e antebraço.<span class=\"mod\"><b>Sábado · 8h às 18h</b><small>27 de fevereiro de 2027</small></span>", datas:["2027-02-27"], quando:"", meta:["UniMetrocamp · Campinas, SP"], selo:"Lista de espera aberta", link:"https://marcelofurlanfisio.github.io/curso_liberacao_miofascial/", botao:"Ver o curso"},
+  {titulo:"Terapia Manual Moderna", resumo:"Formação em dois módulos.<span class=\"mod\"><b>Módulo 01 · Coluna Vertebral</b><small>22 e 23 de maio de 2027</small></span><span class=\"mod\"><b>Módulo 02 · Membros &amp; ATM</b><small>29 e 30 de maio de 2027</small></span>", datas:["2027-05-22","2027-05-23","2027-05-29","2027-05-30"], quando:"", meta:["UniMetrocamp · Campinas, SP"], selo:"Lista de espera aberta", link:"https://marcelofurlanfisio.github.io/curso_terapia_manual_moderna/", botao:"Ver o curso"},
+  {titulo:"Mobilização Neural", resumo:"Testes neurodinâmicos e técnicas de mobilização neural integradas à terapia manual, com revisão no laboratório de anatomia.<span class=\"mod\"><b>Sábado e domingo · 16h</b><small>06 e 07 de novembro de 2027</small></span>", datas:["2027-11-06","2027-11-07"], quando:"", meta:["UniMetrocamp · Campinas, SP"], selo:"Lista de espera aberta", link:"https://marcelofurlanfisio.github.io/curso_mobilizacao_neural/", botao:"Ver o curso"}
 ];
 /* ============================================================ */
 
@@ -630,13 +645,23 @@ const CURSOS = [
         el.onclick = () => {
           document.querySelectorAll('.curso.destaque').forEach(x => x.classList.remove('destaque'));
           cursos.forEach(i => document.getElementById('curso-' + i).classList.add('destaque'));
-          document.getElementById('curso-' + cursos[0]).scrollIntoView({behavior:'smooth', block:'nearest'});
+          irCurso(cursos[0]); document.getElementById('calendario').scrollIntoView({behavior:'smooth', block:'nearest'});
         };
       }
       dias.appendChild(el);
     }
   }
-  document.querySelectorAll('.cal-nav').forEach(b => b.onclick = () => { ref = new Date(ref.getFullYear(), ref.getMonth() + (+b.dataset.dir), 1); desenhar(); });
+  // Carrossel dos cursos
+  const pontos = document.getElementById('cur-dots');
+  function irCurso(i){ const el = document.getElementById('curso-' + i); lista.scrollTo({left: el.offsetLeft - lista.offsetLeft, behavior:'smooth'}); }
+  const dots = CURSOS.map((c,i) => { const d = document.createElement('button'); d.type='button'; d.setAttribute('aria-label', c.titulo); d.onclick = () => irCurso(i); pontos.appendChild(d); return d; });
+  function atual(){ const w = lista.querySelector('.curso').offsetWidth + 20; return Math.round(lista.scrollLeft / w); }
+  function marcar(){ const fim = lista.scrollLeft >= lista.scrollWidth - lista.clientWidth - 5; const k = fim ? CURSOS.length - 1 : atual(); dots.forEach((d,i) => d.setAttribute('aria-current', i === k ? 'true' : 'false')); }
+  lista.addEventListener('scroll', () => { clearTimeout(lista._t); lista._t = setTimeout(marcar, 80); }, {passive:true});
+  document.querySelector('.cur-prev').onclick = () => irCurso(Math.max(0, atual() - 1));
+  document.querySelector('.cur-next').onclick = () => irCurso(Math.min(CURSOS.length - 1, atual() + 1));
+  marcar();
+  document.querySelectorAll('.cal-head .cal-nav').forEach(b => b.onclick = () => { ref = new Date(ref.getFullYear(), ref.getMonth() + (+b.dataset.dir), 1); desenhar(); });
   desenhar();
 })();
 
